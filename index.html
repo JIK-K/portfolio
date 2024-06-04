@@ -1,13 +1,3 @@
-<!-- HELLO
--
-DevFolio is a minimal, clean, lightweight and fully responsive template for Devlopers!
-Created by Anil Seervi.
--
-GitHub repo: https://github.com/AnilSeervi/DevFolio
-README: https://github.com/AnilSeervi/DevFolio/blob/master/README.md
--
-Have fun creating your portfolio on this template!!! -->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -21,13 +11,13 @@ Have fun creating your portfolio on this template!!! -->
     <title>Jung Woon Jik | Developer</title>
 
     <!-- Add some coding keywords below, Ex: (javascript, yourusername, etc) -->
-    <meta name="keywords" content="[username], [name], skill" />
+    <meta name="keywords" content="JIK-K, Jung Woon Jik, skill" />
 
     <!-- Improve your SEO by adding a small descrption of you -->
     <meta name="description" content="Jung Woon Jik | Developer" />
 
     <!-- Add a your png Logo to the assets folder and change the href attr accordingly  -->
-    <link rel="icon" type="image/png" href="./assets/devfolio-logo.png" />
+    <link rel="icon" type="image/png" href="./assets/logo.png" />
 
     <!-- Add your primary-theme color for the value of content -->
     <meta name="theme-color" content="#36d1dc" />
@@ -100,12 +90,14 @@ Have fun creating your portfolio on this template!!! -->
     </script>
     <!-- End of Google Analytics -->
   </head>
+
   <body>
     <!-- Hero Section -->
     <div id="hero">
       <section class="container">
         <h1 class="hero-title">
-          Hi, my name is <span class="text-color-main name">Jung Woon Jik</span>
+          Hello, my name is
+          <span class="text-color-main name">Jung Woon Jik</span>
           <br />
           I'm Backend Developer.
         </h1>
@@ -127,15 +119,17 @@ Have fun creating your portfolio on this template!!! -->
           <div class="about-wrapper__image">
             <img
               class="img-fluid"
-              src="./assets/profile.png"
+              src="./assets/logo.png"
               alt="Profile Image"
               width="450"
               height="350"
             />
           </div>
           <div class="about-wrapper__info">
-            <p class="about-wrapper__info-text">설명1</p>
-            <p class="about-wrapper__info-text">설명2</p>
+            <p class="about-wrapper__info-text">
+              안녕 날 소개하지 이름은 김하온 직업은 인파이터
+            </p>
+            <p class="about-wrapper__info-text">랩해 터터러~</p>
             <span class="about-wrapper__cta">
               <a href="#" class="cta-btn cta-btn--resume">View Resume</a>
             </span>
@@ -151,23 +145,16 @@ Have fun creating your portfolio on this template!!! -->
         <h2 class="section-title">Education</h2>
         <div class="education-wrapper">
           <!-- Education item -->
-          <!-- <div class="education-item">
-            <h3 class="education-degree">Master of Applied Science</h3>
-            <span class="education-institution"
-              >University of British Columbia (UBC)</span
-            >
-            <span class="education-gpa">GPA: 4.0 / 4.0</span>
-            <span class="education-duration">Sep 2022 - Sep 2024</span>
-          </div>
           <div class="education-item">
-            <h3 class="education-degree">Bachelor of Computer Engineering</h3>
+            <h3 class="education-degree">
+              컴퓨터 공학 학사 [Bachelor of Computer Engineering]
+            </h3>
             <span class="education-institution"
-              >Ferdowsi University of Mashhad (FUM)</span
+              >계명대학교 [Keimyung University]</span
             >
-            <span class="education-gpa">GPA: 3.58 / 4.0</span>
-            <span class="education-duration">Sep 2018 - Jan 2022</span>
-          </div> -->
-          중졸 고졸 대졸 육군만기전역
+            <span class="education-gpa">학점: 3.43 / 4.5</span>
+            <span class="education-duration">Fep 2018 - Jan 2024</span>
+          </div>
           <!-- Repeat for more education items -->
         </div>
       </div>
@@ -179,29 +166,20 @@ Have fun creating your portfolio on this template!!! -->
       <div class="container">
         <h2 class="section-title">Skills</h2>
         <ul class="skills-list">
-          <!-- <li>Programming Languages: <span>Python, Java, C</span></li>
           <li>
-            Python Deep Learning Libraries:
-            <span>PyTorch, TensorFlow, Keras</span>
+            Programming Languages: <span>Java, JavaScript, Typescript</span>
           </li>
+
           <li>
-            Python Data & Machine Learning Libraries:
-            <span>SKLearn, Pandas, Numpy</span>
+            Frameworks & Libraries:
+            <span>Nestjs, Nextjs, Flutter, Electron, React</span>
           </li>
+          <li>Database: <span>MySQL, MariaDB</span></li>
           <li>
-            Python Computer Vision Libraries:
-            <span>YOLOv5, Detectron2, OpenCV</span>
+            OS & DevOps:
+            <span>Windows, Ubuntu, Linux, MacOS</span>
           </li>
-          <li>Python NLP Libraries: <span>Transformers, NLTK</span></li>
-          <li>Other Libraries: <span>Stable Baselines3, OpenAI-Gym</span></li>
-          <li>
-            OS, Tools & Technologies:
-            <span
-              >Windows, Ubuntu, MySQL, Git, GitHub, Hugging Face Model Hub,
-              TensorBoard</span
-            >
-          </li> -->
-          설명 yaya
+          <li>Cowork-Tools: <span>Git, Github, Notion, Slack</span></li>
         </ul>
       </div>
     </section>
@@ -214,6 +192,41 @@ Have fun creating your portfolio on this template!!! -->
           <h2 class="section-title dark-blue-text">Projects</h2>
 
           <!-- Each .row is a project -->
+          <article class="row">
+            <div class="project-wrapper__text">
+              <h3 class="project-wrapper__text-title">LOLFIGHT</h3>
+              <p class="project-wrapper__text-info">
+                온라인 비디오 게임 League Of Legends의 사설 커스텀 게임을
+                주관하는 서비스 입니다. <br /><br />사용자들은 LOLFIGHT에서
+                제공하는 Desktop 앱을 사용하여 League Of Legends와 연결하며,
+                매칭 시스템을 통하여 상대방을 찾고 알맞은 대전을 즐길 수
+                있습니다. <br /><br />웹 서비스로 게시판과 길드의 랭킹 제도를
+                제공하여 조금더 경쟁있는 사설 게임을 즐길 수 있습니다.
+              </p>
+              <div class="project-wrapper__text-btns">
+                <a
+                  href="https://lolfight.kr/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="cta-btn cta-btn--hero cta-btn--projects"
+                  >go Site</a
+                >
+              </div>
+            </div>
+
+            <div class="project-wrapper__image">
+              <div class="thumbnail rounded">
+                <img
+                  src="./assets/lolfight.png"
+                  class="img-fluid"
+                  alt="Project Image"
+                  width="1366px"
+                  height="767px"
+                />
+              </div>
+            </div>
+          </article>
+
           <article class="row">
             <div class="project-wrapper__text">
               <h3 class="project-wrapper__text-title">Project Title</h3>
