@@ -40,7 +40,7 @@ a:hover {
   color: #272341;
 }
 .text-color-main {
-  margin-left: 1rem;
+  /* margin-left: 1rem; */
   color: #5b86e5;
   -webkit-text-fill-color: #5b86e5;
 }
@@ -612,7 +612,9 @@ section .row span {
   }
 }
 #projects .project-wrapper__text-info {
-  margin-bottom: 1.5rem;
+  font-size: 15px;
+  font-weight: 500;
+  /* margin-bottom: 1.5rem; */
 }
 #projects .project-wrapper__text-btns {
   width: 100%;
@@ -621,7 +623,7 @@ section .row span {
   flex-wrap: wrap;
 }
 #projects .project-wrapper__image {
-  width: 90%;
+  width: 80%;
   margin: 0 auto;
 }
 @media (max-width: 75em) {
