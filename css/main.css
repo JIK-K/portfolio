@@ -10,7 +10,7 @@ html {
   scroll-behavior: smooth;
 }
 body {
-  text-align: center;
+  /* text-align: center; */
   line-height: 1.5;
 }
 h1 {
@@ -328,6 +328,7 @@ section .row span {
   }
 }
 #about {
+  text-align: center;
   background-color: #36d1dc;
   background-image: linear-gradient(135deg, #36d1dc 0%, #5b86e5 100%);
   color: #fff;
@@ -555,8 +556,9 @@ section .row span {
 }
 #projects {
   background-color: #e5e5e5;
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  clip-path: polygon(0 5%, 100% 0, 100% 100%, 0 100%);
   color: #272341;
-  margin-top: -15rem;
   padding-top: 15rem;
 }
 @media (max-width: 75em) {
@@ -623,7 +625,7 @@ section .row span {
   flex-wrap: wrap;
 }
 #projects .project-wrapper__image {
-  width: 80%;
+  width: 70%;
   margin: 0 auto;
 }
 @media (max-width: 75em) {
@@ -638,7 +640,7 @@ section .row span {
 }
 #projects .project-wrapper__image .thumbnail .img-fluid {
   width: 100%;
-  height: 360px;
+  height: 320px;
   vertical-align: middle;
   border-radius: 2px;
   object-fit: contain;
@@ -653,23 +655,19 @@ section .row span {
 }
 
 #education {
-  padding: 60px; /* Adjust padding to match Projects section */
+  padding: 60px;
 }
 /* Education Section Adjustments */
 .education-wrapper {
-  display: flex; /* Enables flexbox layout to organize education items side by side */
-  flex-wrap: wrap; /* Allows items to wrap to the next line if not enough space */
-  gap: 20px; /* Adds space between the education items */
-  justify-content: center; /* Centers the items within the container */
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .education-item {
-  flex-basis: calc(
-    50% - 20px
-  ); /* Sets a base width for each item, accounting for the gap */
-  display: flex; /* Optional: If you want vertical centering or additional layout control inside the item */
-  flex-direction: column; /* Stacks item content vertically */
-  align-items: flex-start; /* Aligns items to the start of the flex-direction (left in this case) */
+  flex-basis: calc(50% - 20px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   /* padding-left: 15px; */
 }
 
@@ -699,7 +697,7 @@ section .row span {
   font-size: 16px;
 }
 
-#skills {
+#certifications {
   padding: 60px 0; /* Adjust padding to match Projects section */
   background-color: #36d1dc;
   background-image: linear-gradient(135deg, #5b86e5 0%, #36d1dc 100%);
@@ -707,6 +705,46 @@ section .row span {
   /* clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); */
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 90%);
   color: #fff;
+}
+.certifications-wrapper {
+  /* display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center; */
+}
+.certification-item {
+  flex-basis: calc(50% - 20px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* padding-left: 15px; */
+}
+.certification-name {
+  color: #ffffff; /* Theme color for titles and duration, adjust as needed */
+  font-weight: bold; /* Adds emphasis to titles and duration */
+  margin: 0; /* Removes default margins */
+  font-size: 18px;
+  text-align: left;
+}
+.certification-date {
+  margin-top: 10px; /* Adds space above the duration */
+  font-style: italic; /* Differentiates duration from other texts */
+  font-size: 16px;
+}
+.certification-issuer {
+  text-align: left;
+  color: #cae8ea; /* Theme color for titles and duration, adjust as needed */
+  font-weight: bold; /* Adds emphasis to titles and duration */
+  margin: 0; /* Removes default margins */
+  font-size: 14px;
+  width: 100%;
+  display: block;
+}
+
+#skills {
+  padding: 60px 0; /* Adjust padding to match Projects section */
+  margin-top: 2rem;
+  /* margin-bottom: 10rem; */
 }
 @media (max-width: 75em) {
   #skills {
@@ -730,7 +768,7 @@ section .row span {
 }
 
 .skills-list span {
-  color: #ffffff; /* Subtle color for descriptions, adjust for readability */
+  color: #000000; /* Subtle color for descriptions, adjust for readability */
   text-align: left; /* Ensures descriptions are left-aligned */
   font-size: 16px;
 }
