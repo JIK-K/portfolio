@@ -557,7 +557,7 @@ section .row span {
 #projects {
   background-color: #e5e5e5;
   -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-  clip-path: polygon(0 5%, 100% 0, 100% 100%, 0 100%);
+  clip-path: polygon(0 0, 100% 5%, 100% 100%, 0 100%);
   color: #272341;
   padding-top: 15rem;
 }
