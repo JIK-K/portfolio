@@ -37,10 +37,10 @@
   
   @keyframes scroll-left {
     from { transform: translateX(0); }
-    to { transform: translateX(-30%); }
+    to { transform: translateX(-10%); }
   }
   @keyframes scroll-right {
-    from { transform: translateX(-30%); }
+    from { transform: translateX(-10%); }
     to { transform: translateX(0); }
   }
   
@@ -65,4 +65,39 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-inter), sans-serif;
+}
+
+section {
+  scroll-margin-top: 80px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  animation: reveal 0.8s cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(24, 24, 27, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
