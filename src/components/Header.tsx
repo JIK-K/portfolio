@@ -18,7 +18,9 @@ const Header = () => {
     { name: "Intro", href: "#intro", id: "intro" },
     { name: "Tech Stack", href: "#tech", id: "tech" },
     { name: "Projects", href: "#projects", id: "projects" },
-    { name: "Experience", href: "#experience", id: "experience" },
+    { name: "Career", href: "#career", id: "career" },
+    { name: "Education", href: "#education", id: "education" },
+    { name: "Certification", href: "#certification", id: "certification" },
   ];
 
   useEffect(() => {

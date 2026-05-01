@@ -2,7 +2,9 @@ import React from "react";
 import Hero from "../components/Hero";
 import TechStack from "../components/TechStack";
 import Projects from "../components/Projects";
-import Experience from "../components/Experience";
+import Career from "../components/Career";
+import Activity from "../components/Education";
+import Certification from "../components/Certification";
 
 export default function Home() {
   return (
@@ -10,7 +12,9 @@ export default function Home() {
       <Hero />
       <TechStack />
       <Projects />
-      <Experience />
+      <Career />
+      <Activity />
+      <Certification />
     </div>
   );
 }
