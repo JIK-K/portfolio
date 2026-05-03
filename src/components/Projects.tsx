@@ -1,7 +1,7 @@
 "use client";
 
 import { ProjectData } from "../types/project";
-import { projectsData } from "../data/projects";
+import { projectsData } from "../data/projects/index";
 import Image from "next/image";
 import localFont from "next/font/local";
 import { useRouter } from "next/navigation";
