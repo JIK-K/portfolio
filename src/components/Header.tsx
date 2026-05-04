@@ -81,8 +81,8 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 w-full z-[100] bg-zinc-950/70 backdrop-blur-md border-b border-white/[0.05]">
-      <nav className="flex justify-between items-center px-[24px] py-[16px] max-w-[1400px] mx-auto">
+    <header className="sticky top-0 w-full z-[100] bg-zinc-950/70 backdrop-blur-md ">
+      <nav className="flex justify-between items-center px-[24px] py-[18px] max-w-[1400px] mx-auto">
         {/* Logo */}
         <div
           className={`${rixi.className} text-[22px] tracking-[2px] leading-none select-none cursor-pointer hover:opacity-80 transition-opacity`}

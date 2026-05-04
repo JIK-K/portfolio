@@ -76,7 +76,7 @@ const TechStack = () => {
   );
 
   return (
-    <section className="py-[120px] bg-white overflow-hidden" id="tech">
+    <section className="py-[100px] bg-white overflow-hidden" id="tech">
       <div className="max-w-[1280px] mx-auto px-[32px] mb-[64px]">
         <div className="flex items-center gap-[16px]">
           <h2 className="text-[32px] font-bold text-zinc-900">Tech Stack</h2>

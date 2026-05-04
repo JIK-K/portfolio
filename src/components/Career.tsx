@@ -2,7 +2,10 @@ import { careers } from "../data/careers";
 
 const Career = () => {
   return (
-    <section className="py-[100px] bg-zinc-950" id="career">
+    <section
+      className="min-h-[calc(100vh-70px)] py-[100px] bg-zinc-950"
+      id="career"
+    >
       <div className="max-w-[1280px] mx-auto px-[32px]">
         {/* Section Header */}
         <div className="flex items-center gap-[24px] mb-[60px]">

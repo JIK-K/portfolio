@@ -141,7 +141,7 @@ const ProjectCard = ({
 
 const Projects = () => {
   return (
-    <section className="py-[140px]" id="projects">
+    <section className="py-[100px]" id="projects">
       <div className="flex flex-col max-w-[1280px] mx-auto px-[32px]">
         {/* Header */}
         <div className="flex items-center gap-[32px] pb-[64px]">
