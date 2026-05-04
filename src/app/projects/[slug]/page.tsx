@@ -4,6 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { projectsData } from "@/src/data/projects";
+import localFont from "next/font/local";
 
 const NAV_ITEMS = [
   { id: "overview", num: "01", label: "Overview" },
@@ -15,6 +16,12 @@ const NAV_ITEMS = [
   { id: "retrospective", num: "07", label: "Retrospective" },
   { id: "links", num: "08", label: "Links" },
 ];
+
+const rixi = localFont({
+  src: "../../../assets/fonts/RixInooAriDuriRegular.ttf",
+  display: "swap",
+  variable: "--font-rixi",
+});
 
 const ProjectDetailPage = () => {
   const params = useParams();
@@ -122,9 +129,9 @@ const ProjectDetailPage = () => {
         </aside>
 
         {/* ─── Main Content ─── */}
-        <main className="flex-1 min-w-0 pb-[120px]">
+        <main className="flex-1 min-w-0 pb-[80px] lg:pb-[120px] px-[24px] lg:px-0">
           {/* Hero Header */}
-          <section className="pt-[100px] pb-[72px] border-b border-zinc-800/80 mb-[80px] pr-[48px]">
+          <section className="pt-[60px] lg:pt-[100px] pb-[48px] lg:pb-[72px] border-b border-zinc-800/80 mb-[48px] lg:mb-[80px] lg:pr-[48px]">
             {/* Mobile back button */}
             <button
               onClick={() => router.push("/")}
@@ -136,17 +143,15 @@ const ProjectDetailPage = () => {
               Back to Main
             </button>
 
-            <div className="flex flex-col md:flex-row gap-[40px] items-start">
+            <div className="flex flex-col md:flex-row gap-[24px] md:gap-[40px] items-start">
               {project.icon && (
-                <div className="w-[72px] h-[72px] bg-zinc-900 rounded-[18px] border border-zinc-800 p-[12px] flex items-center justify-center shrink-0">
-                  <Image
-                    src={project.icon}
-                    alt={project.title}
-                    width={48}
-                    height={48}
-                    className="object-contain"
-                  />
-                </div>
+                <Image
+                  src={project.icon}
+                  alt={project.title}
+                  width={72}
+                  height={72}
+                  className="object-contain w-[72px] h-[72px]"
+                />
               )}
               <div className="flex flex-col gap-[20px]">
                 <div className="flex flex-wrap gap-[6px]">
@@ -159,10 +164,12 @@ const ProjectDetailPage = () => {
                     </span>
                   ))}
                 </div>
-                <h1 className="text-[44px] md:text-[56px] font-black text-white tracking-tighter leading-none">
+                <h1
+                  className={`${rixi.className} text-[36px] md:text-[48px] font-light text-white tracking-wide leading-none`}
+                >
                   {project.title}
                 </h1>
-                <p className="text-[17px] md:text-[20px] text-zinc-500 font-medium leading-relaxed max-w-[680px] break-keep">
+                <p className="text-[15px] md:text-[16px] text-zinc-500 font-medium leading-relaxed max-w-[680px] break-keep">
                   {project.description}
                 </p>
               </div>
@@ -170,15 +177,15 @@ const ProjectDetailPage = () => {
           </section>
 
           {/* Sections */}
-          <div className="flex flex-col gap-[96px] pr-[48px]">
+          <div className="flex flex-col gap-[64px] lg:gap-[96px] lg:pr-[48px]">
             {/* 01. Project Overview */}
             <section id="overview" className="scroll-mt-[32px]">
               <SectionHeader num="01" title="Project Overview" />
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-[20px]">
-                <div className="md:col-span-2 bg-zinc-900/40 rounded-[24px] p-[32px] border border-zinc-800/60 text-[15px] leading-[1.8] text-zinc-400 whitespace-pre-wrap">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-[20px]">
+                <div className="lg:col-span-2 bg-zinc-900/40 rounded-[24px] p-[24px] lg:p-[32px] border border-zinc-800/60 text-[14px] lg:text-[15px] leading-[1.8] text-zinc-400 whitespace-pre-wrap">
                   {details.overview.description}
                 </div>
-                <div className="flex flex-col gap-[24px] bg-zinc-900/20 p-[28px] rounded-[24px] border border-zinc-800/40">
+                <div className="flex flex-col gap-[24px] bg-zinc-900/20 p-[24px] lg:p-[28px] rounded-[24px] border border-zinc-800/40">
                   <MetaItem label="Period" value={details.overview.period} />
                   <MetaItem label="Role" value={details.overview.role} />
                   {details.overview.goal && (
@@ -223,7 +230,7 @@ const ProjectDetailPage = () => {
                   ))}
                 </div>
                 {details.techStack.mainLibraries && (
-                  <div className="flex flex-col gap-[10px]">
+                  <div className="flex flex-col gap-[10px] font-bold">
                     {details.techStack.mainLibraries.map((lib, idx) => (
                       <div
                         key={idx}
@@ -247,16 +254,22 @@ const ProjectDetailPage = () => {
               <section id="architecture" className="scroll-mt-[32px]">
                 <SectionHeader num="03" title="System Architecture" />
                 <div className="flex flex-col gap-[24px]">
-                  <p className="text-[15px] leading-relaxed text-zinc-500 max-w-[680px]">
+                  <p className="text-[14px] lg:text-[15px] leading-relaxed text-zinc-500 whitespace-pre-wrap">
                     {details.architecture.description}
                   </p>
                   {details.architecture.diagram && (
-                    <div className="bg-black p-[28px] rounded-[24px] border border-zinc-800 font-mono text-zinc-600 text-[13px] leading-loose">
-                      {details.architecture.diagram}
+                    <div className="flex justify-center bg-white p-[8px] rounded-[16px]">
+                      <Image
+                        src={details.architecture.diagram}
+                        alt={project.title}
+                        width={600}
+                        height={600}
+                        className="object-contain w-[600px]"
+                      />
                     </div>
                   )}
                   {details.architecture.tree && (
-                    <div className="bg-zinc-900/40 p-[28px] rounded-[24px] border border-zinc-800/60 font-mono text-blue-400/60 text-[13px] leading-relaxed">
+                    <div className="bg-zinc-900/40 p-[20px] lg:p-[28px] rounded-[24px] border border-zinc-800/60 font-mono text-blue-400/60 text-[11px] lg:text-[13px] leading-relaxed overflow-x-auto">
                       <pre>{details.architecture.tree}</pre>
                     </div>
                   )}
@@ -267,17 +280,15 @@ const ProjectDetailPage = () => {
             {/* 04. Key Features */}
             <section id="features" className="scroll-mt-[32px]">
               <SectionHeader num="04" title="Key Features" />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-[20px]">
+              <div className="flex flex-col gap-[20px]">
                 {details.features.map((feature, idx) => (
                   <div
                     key={idx}
-                    className="group p-[32px] rounded-[28px] bg-zinc-900/40 border border-zinc-800/60 hover:border-blue-500/25 transition-all"
+                    className="group p-[12px] lg:p-[16px] rounded-[24px] lg:rounded-[28px] bg-zinc-900/40 border border-zinc-800/60 hover:border-blue-500/25 transition-all"
                   >
                     <div className="flex flex-col gap-[16px]">
-                      <div className="w-[32px] h-[32px] rounded-full bg-blue-500/10 flex items-center justify-center text-blue-500 font-black text-[10px]">
-                        0{idx + 1}
-                      </div>
-                      <h3 className="text-[18px] font-bold text-white group-hover:text-blue-400 transition-colors">
+                      <h3 className="flex gap-[12px] text-[18px] font-bold text-white group-hover:text-blue-400 transition-colors">
+                        <p className="text-blue-500"> 0{idx + 1}</p>
                         {feature.title}
                       </h3>
                       <p className="text-zinc-500 leading-relaxed text-[14px] break-keep">
@@ -296,9 +307,9 @@ const ProjectDetailPage = () => {
                 {details.challenges.map((item, idx) => (
                   <div
                     key={idx}
-                    className="bg-zinc-900/60 rounded-[28px] border border-zinc-800/60 overflow-hidden"
+                    className="bg-zinc-900/60 rounded-[24px] lg:rounded-[28px] border border-zinc-800/60 overflow-hidden"
                   >
-                    <div className="p-[32px] flex flex-col gap-[24px]">
+                    <div className="p-[24px] lg:p-[32px] flex flex-col gap-[24px]">
                       <h3 className="text-[18px] font-bold text-white border-l-[3px] border-blue-500 pl-[16px]">
                         {item.title}
                       </h3>
@@ -341,13 +352,13 @@ const ProjectDetailPage = () => {
                 {details.optimizations.map((item, idx) => (
                   <div
                     key={idx}
-                    className="p-[32px] rounded-[28px] bg-black border border-zinc-800/60 flex flex-col justify-between gap-[20px]"
+                    className="p-[24px] lg:p-[32px] rounded-[24px] lg:rounded-[28px] bg-black border border-zinc-800/60 flex flex-col justify-between gap-[20px]"
                   >
                     <div className="flex flex-col gap-[12px]">
                       <h4 className="text-[17px] font-bold text-white">
                         {item.title}
                       </h4>
-                      <p className="text-zinc-600 text-[14px] leading-relaxed break-keep">
+                      <p className="text-zinc-600 text-[14px] font-bold leading-relaxed break-keep">
                         {item.description}
                       </p>
                     </div>
@@ -368,19 +379,19 @@ const ProjectDetailPage = () => {
             <section id="retrospective" className="scroll-mt-[32px]">
               <SectionHeader num="07" title="Retrospective" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-[20px]">
-                <div className="p-[32px] rounded-[28px] bg-zinc-900/40 border border-zinc-800/60">
+                <div className="p-[24px] lg:p-[32px] rounded-[24px] lg:rounded-[28px] bg-zinc-900/40 border border-zinc-800/60">
                   <h4 className="text-zinc-600 font-black text-[10px] uppercase tracking-widest mb-[16px]">
                     What I Learned
                   </h4>
-                  <p className="text-zinc-300 text-[15px] leading-relaxed break-keep">
+                  <p className="text-zinc-300 text-[15px] leading-relaxed break-keep whitespace-pre-wrap">
                     {details.retrospective.learned}
                   </p>
                 </div>
-                <div className="p-[32px] rounded-[28px] bg-zinc-900/40 border border-zinc-800/60">
+                <div className="p-[24px] lg:p-[32px] rounded-[24px] lg:rounded-[28px] bg-zinc-900/40 border border-zinc-800/60">
                   <h4 className="text-zinc-600 font-black text-[10px] uppercase tracking-widest mb-[16px]">
                     Achievements
                   </h4>
-                  <p className="text-zinc-300 text-[15px] leading-relaxed break-keep">
+                  <p className="text-zinc-300 text-[15px] leading-relaxed break-keep whitespace-pre-wrap">
                     {details.retrospective.achievement}
                   </p>
                 </div>
@@ -388,19 +399,29 @@ const ProjectDetailPage = () => {
             </section>
 
             {/* 08. Links */}
+            {/* 08. Links */}
             <section id="links" className="scroll-mt-[32px]">
               <SectionHeader num="08" title="Links" />
-              <div className="flex flex-wrap gap-[12px]">
+              <div className="flex flex-col gap-[8px]">
                 {details.links.map((link, idx) => (
                   <a
                     key={idx}
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-[28px] py-[14px] bg-white text-black rounded-full font-black text-[13px] hover:bg-zinc-100 transition-all flex items-center gap-[10px] tracking-wider"
+                    className="group flex items-center justify-between px-[24px] py-[18px] bg-transparent border border-zinc-800 rounded-[16px] hover:border-zinc-700 hover:bg-white/[0.02] transition-all"
                   >
-                    {link.label.toUpperCase()}
-                    <span className="text-[18px]">↗</span>
+                    <div className="flex items-center gap-[14px]">
+                      <span className="text-[11px] font-black text-zinc-700 min-w-[20px]">
+                        {String(idx + 1).padStart(2, "0")}
+                      </span>
+                      <span className="text-[13px] font-bold text-zinc-500 tracking-[0.08em] uppercase group-hover:text-white transition-colors">
+                        {link.label}
+                      </span>
+                    </div>
+                    <span className="text-[15px] text-zinc-700 group-hover:translate-x-[3px] group-hover:-translate-y-[3px] group-hover:text-white transition-all">
+                      ↗
+                    </span>
                   </a>
                 ))}
               </div>
