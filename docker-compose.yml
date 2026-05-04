@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   portfolio-app:
@@ -6,8 +6,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "9912:3000"
+    # Nginx를 통하므로 외부 포트 9912는 닫아도 무방(보안상 유리)
+    expose:
+      - "3000"
     restart: always
     environment:
       - NODE_ENV=production
+    networks:
+      - portfolio-network
+
+networks:
+  portfolio-network:
+    external: true
+    name: lolfight_network # 실제 존재하는 네트워크 이름을 여기 적습니다.
