@@ -101,7 +101,7 @@ const ProjectCard = ({
             </div>
           </div>
 
-          <div className="flex flex-col gap-[28px] p-[28px] overflow-y-auto no-scrollbar relative">
+          <div className="flex flex-col gap-[28px] p-[28px] max-h-[300px] overflow-y-auto no-scrollbar relative">
             {problems.map((item, index) => (
               <div key={index} className="flex flex-col gap-[12px]">
                 <p className="text-[16px] font-bold text-zinc-100 leading-snug">
