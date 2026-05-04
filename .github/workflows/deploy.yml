@@ -1,0 +1,30 @@
+name: Deploy Portfolio
+
+on:
+  push:
+    branches: [main] # 메인 브랜치에 푸시될 때 실행
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # SSH를 통해 서버에 접속하여 배포 명령 실행
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/projects/portfolio
+            git pull origin main
+            # 이미지를 빌드하고 컨테이너를 다시 띄웁니다.
+            # --build 옵션은 코드가 바뀌었을 때 이미지를 새로 만듭니다.
+            docker-compose up -d --build
+
+            # (선택) 사용하지 않는 이전 이미지들 정리
+            docker image prune -f
