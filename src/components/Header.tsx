@@ -85,7 +85,7 @@ const Header = () => {
       <nav className="flex justify-between items-center px-[24px] py-[18px] max-w-[1400px] mx-auto">
         {/* Logo */}
         <div
-          className={`${rixi.className} text-[22px] tracking-[2px] leading-none select-none cursor-pointer hover:opacity-80 transition-opacity`}
+          className={`${rixi.className} text-[22px] tracking-[2px] leading-none select-none`}
         >
           JUNG WOON JIK
         </div>

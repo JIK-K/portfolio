@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  portfolio-app:
+    container_name: portfolio-nextjs
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9912:3000"
+    restart: always
+    environment:
+      - NODE_ENV=production
