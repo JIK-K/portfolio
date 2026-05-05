@@ -6,9 +6,9 @@ const Education = () => {
       className="min-h-[calc(100vh-65px)] py-[100px] bg-white"
       id="education"
     >
-      <div className="max-w-[1280px] mx-auto px-[32px]">
+      <div className="max-w-[1280px] mx-auto px-[32px] flex flex-col gap-[60px]">
         {/* Section Header */}
-        <div className="flex items-center gap-[24px] mb-[60px]">
+        <div className="flex items-center gap-[24px]">
           <div className="flex flex-col gap-[8px]">
             <h2 className="text-[40px] font-bold text-zinc-900 tracking-tighter whitespace-nowrap">
               Education

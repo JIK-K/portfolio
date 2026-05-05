@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import { HERO_LINKS } from "../data/heroLinks";
 
 const CONTACT_ITEMS = [
   {
@@ -126,36 +127,24 @@ const Hero = () => {
 
         {/* Buttons */}
         <div className="flex flex-col sm:flex-row gap-[12px] items-center">
-          <a
-            href="https://github.com/JIK-K"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-[10px] px-[22px] py-[11px] bg-black backdrop-blur-md border border-white/15 text-zinc-200 rounded-[14px] font-bold text-[14px] hover:bg-white/10 hover:border-white/30 active:scale-[0.98] transition-all"
-          >
-            <Image
-              src="/github_white.png"
-              alt="github"
-              width={20}
-              height={20}
-              className="object-contain"
-            />
-            Github
-          </a>
-          <a
-            href="https://dnswlrsla.tistory.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-[10px] px-[22px] py-[11px] bg-black backdrop-blur-md border border-white/15 text-zinc-200 rounded-[14px] font-bold text-[14px] hover:bg-white/10 hover:border-white/30 active:scale-[0.98] transition-all"
-          >
-            <Image
-              src="/WOONIVERSE.ico"
-              alt="blog"
-              width={20}
-              height={20}
-              className="object-contain"
-            />
-            BLOG
-          </a>
+          {HERO_LINKS.map(({ href, label, icon, alt }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-[10px] px-[22px] py-[11px] bg-black backdrop-blur-md border border-white/15 text-zinc-200 rounded-[14px] font-bold text-[14px] hover:bg-white/10 hover:border-white/30 active:scale-[0.98] transition-all"
+            >
+              <Image
+                src={icon}
+                alt={alt}
+                width={20}
+                height={20}
+                className="object-contain"
+              />
+              {label}
+            </a>
+          ))}
         </div>
       </div>
     </section>

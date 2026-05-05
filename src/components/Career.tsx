@@ -6,9 +6,9 @@ const Career = () => {
       className="min-h-[calc(100vh-70px)] py-[100px] bg-zinc-950"
       id="career"
     >
-      <div className="max-w-[1280px] mx-auto px-[32px]">
+      <div className="max-w-[1280px] mx-auto px-[32px] flex flex-col gap-[60px]">
         {/* Section Header */}
-        <div className="flex items-center gap-[24px] mb-[60px]">
+        <div className="flex items-center gap-[24px]">
           <div className="flex flex-col gap-[8px]">
             <h2 className="text-[40px] font-bold text-white tracking-tighter whitespace-nowrap">
               Career

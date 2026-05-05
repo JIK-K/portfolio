@@ -3,7 +3,7 @@ import Hero from "../components/Hero";
 import TechStack from "../components/TechStack";
 import Projects from "../components/Projects";
 import Career from "../components/Career";
-import Activity from "../components/Education";
+import Education from "../components/Education";
 import Certification from "../components/Certification";
 
 export default function Home() {
@@ -13,7 +13,7 @@ export default function Home() {
       <TechStack />
       <Projects />
       <Career />
-      <Activity />
+      <Education />
       <Certification />
     </div>
   );

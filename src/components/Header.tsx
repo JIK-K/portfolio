@@ -1,27 +1,13 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import localFont from "next/font/local";
-
-const rixi = localFont({
-  src: "../assets/fonts/RixInooAriDuriRegular.ttf",
-  display: "swap",
-  variable: "--font-rixi",
-});
+import { NAV_ITEMS } from "../data/navItems";
+import { rixi } from "../lib/fonts";
 
 const Header = () => {
   const [activeNav, setActiveNav] = useState("intro");
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
   const navRefs = useRef<{ [key: string]: HTMLAnchorElement | null }>({});
-
-  const navItems = [
-    { name: "Intro", href: "#intro", id: "intro" },
-    { name: "Tech Stack", href: "#tech", id: "tech" },
-    { name: "Projects", href: "#projects", id: "projects" },
-    { name: "Career", href: "#career", id: "career" },
-    { name: "Education", href: "#education", id: "education" },
-    { name: "Certification", href: "#certification", id: "certification" },
-  ];
 
   useEffect(() => {
     const activeElement = navRefs.current[activeNav];
@@ -53,7 +39,7 @@ const Header = () => {
       observerOptions,
     );
 
-    navItems.forEach((item) => {
+    NAV_ITEMS.forEach((item) => {
       const element = document.getElementById(item.id);
       if (element) observer.observe(element);
     });
@@ -101,7 +87,7 @@ const Header = () => {
             }}
           />
 
-          {navItems.map((item) => (
+          {NAV_ITEMS.map((item) => (
             <a
               key={item.id}
               href={item.href}

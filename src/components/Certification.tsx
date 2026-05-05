@@ -6,9 +6,9 @@ const Certification = () => {
       className="min-h-[calc(100vh-70px)] py-[100px] bg-zinc-950"
       id="certification"
     >
-      <div className="max-w-[1280px] mx-auto px-[32px]">
+      <div className="max-w-[1280px] mx-auto px-[32px] flex flex-col gap-[60px]">
         {/* Section Header */}
-        <div className="flex items-center gap-[24px] mb-[60px]">
+        <div className="flex items-center gap-[24px]">
           <div className="flex flex-col gap-[8px]">
             <h2 className="text-[40px] font-bold text-white tracking-tighter whitespace-nowrap">
               Certification
@@ -33,7 +33,7 @@ const Certification = () => {
                   </span>
                 </div>
               </div>
-              <div className="mt-[12px] md:mt-0 text-[14px] font-black text-blue-500 font-mono">
+              <div className="pt-[12px] md:pt-0 text-[14px] font-black text-blue-500 font-mono">
                 {item.date}
               </div>
             </div>

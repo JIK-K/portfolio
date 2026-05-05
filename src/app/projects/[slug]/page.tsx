@@ -4,24 +4,8 @@ import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { projectsData } from "@/src/data/projects";
-import localFont from "next/font/local";
-
-const NAV_ITEMS = [
-  { id: "overview", num: "01", label: "Overview" },
-  { id: "stack", num: "02", label: "Tech Stack" },
-  { id: "architecture", num: "03", label: "Architecture" },
-  { id: "features", num: "04", label: "Key Features" },
-  { id: "challenges", num: "05", label: "Challenges" },
-  { id: "optimization", num: "06", label: "Core Logic" },
-  { id: "retrospective", num: "07", label: "Retrospective" },
-  { id: "links", num: "08", label: "Links" },
-];
-
-const rixi = localFont({
-  src: "../../../assets/fonts/RixInooAriDuriRegular.ttf",
-  display: "swap",
-  variable: "--font-rixi",
-});
+import { PROJECT_NAV_ITEMS } from "@/src/data/projectNavItems";
+import { rixi } from "@/src/lib/fonts";
 
 const ProjectDetailPage = () => {
   const params = useParams();
@@ -44,7 +28,7 @@ const ProjectDetailPage = () => {
       { rootMargin: "-20% 0px -70% 0px", threshold: 0 },
     );
 
-    NAV_ITEMS.forEach(({ id }) => {
+    PROJECT_NAV_ITEMS.forEach(({ id }) => {
       const el = document.getElementById(id);
       if (el) observerRef.current?.observe(el);
     });
@@ -59,7 +43,7 @@ const ProjectDetailPage = () => {
   if (!project) {
     return (
       <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center text-white p-[32px]">
-        <h1 className="text-[32px] font-bold mb-[24px]">Project not found</h1>
+        <h1 className="text-[32px] font-bold">Project not found</h1>
         <button
           onClick={() => router.push("/")}
           className="px-[24px] py-[12px] bg-blue-600 rounded-full font-bold hover:bg-blue-500 transition-colors"
@@ -80,7 +64,7 @@ const ProjectDetailPage = () => {
           {/* Back button */}
           <button
             onClick={() => router.push("/")}
-            className="flex items-center gap-[6px] text-[11px] font-bold text-zinc-600 uppercase tracking-widest hover:text-zinc-400 transition-colors mb-[28px] pb-[20px] border-b border-zinc-800/80 group"
+            className="flex items-center gap-[6px] text-[11px] font-bold text-zinc-600 uppercase tracking-widest hover:text-zinc-400 transition-colors pb-[28px] border-b border-zinc-800/80 group"
           >
             <span className="group-hover:-translate-x-0.5 transition-transform inline-block">
               ←
@@ -90,7 +74,7 @@ const ProjectDetailPage = () => {
 
           {/* Nav items */}
           <nav className="flex flex-col gap-[2px]">
-            {NAV_ITEMS.map(({ id, num, label }) => (
+            {PROJECT_NAV_ITEMS.map(({ id, num, label }) => (
               <button
                 key={id}
                 onClick={() => scrollTo(id)}
@@ -131,11 +115,11 @@ const ProjectDetailPage = () => {
         {/* ─── Main Content ─── */}
         <main className="flex-1 min-w-0 pb-[80px] lg:pb-[120px] px-[24px] lg:px-0">
           {/* Hero Header */}
-          <section className="pt-[60px] lg:pt-[100px] pb-[48px] lg:pb-[72px] border-b border-zinc-800/80 mb-[48px] lg:mb-[80px] lg:pr-[48px]">
+          <section className="pt-[60px] lg:pt-[100px] pb-[48px] lg:pb-[72px] border-b border-zinc-800/80 lg:pr-[48px]">
             {/* Mobile back button */}
             <button
               onClick={() => router.push("/")}
-              className="lg:hidden mb-[36px] flex items-center gap-[8px] text-zinc-500 hover:text-white transition-colors group text-[12px] font-bold uppercase tracking-widest"
+              className="lg:hidden pb-[36px] flex items-center gap-[8px] text-zinc-500 hover:text-white transition-colors group text-[12px] font-bold uppercase tracking-widest"
             >
               <span className="group-hover:-translate-x-0.5 transition-transform inline-block">
                 ←
@@ -177,7 +161,7 @@ const ProjectDetailPage = () => {
           </section>
 
           {/* Sections */}
-          <div className="flex flex-col gap-[64px] lg:gap-[96px] lg:pr-[48px]">
+          <div className="flex flex-col gap-[64px] lg:gap-[96px] lg:pr-[48px] pt-[48px] lg:pt-[80px]">
             {/* 01. Project Overview */}
             <section id="overview" className="scroll-mt-[32px]">
               <SectionHeader num="01" title="Project Overview" />
@@ -189,8 +173,8 @@ const ProjectDetailPage = () => {
                   <MetaItem label="Period" value={details.overview.period} />
                   <MetaItem label="Role" value={details.overview.role} />
                   {details.overview.goal && (
-                    <div>
-                      <p className="text-[10px] font-black text-zinc-600 uppercase tracking-widest mb-[6px]">
+                    <div className="flex flex-col gap-[6px]">
+                      <p className="text-[10px] font-black text-zinc-600 uppercase tracking-widest">
                         Main Goal
                       </p>
                       <p className="text-zinc-400 text-[13px] leading-snug break-keep">
@@ -236,7 +220,7 @@ const ProjectDetailPage = () => {
                         key={idx}
                         className="p-[20px] rounded-[16px] bg-blue-500/4 border border-blue-500/10"
                       >
-                        <h4 className="text-blue-400 font-bold mb-[6px] text-[14px]">
+                        <h4 className="text-blue-400 font-bold text-[14px] pb-[6px]">
                           {lib.name}
                         </h4>
                         <p className="text-zinc-500 text-[13px] leading-relaxed break-keep">
@@ -380,7 +364,7 @@ const ProjectDetailPage = () => {
               <SectionHeader num="07" title="Retrospective" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-[20px]">
                 <div className="p-[24px] lg:p-[32px] rounded-[24px] lg:rounded-[28px] bg-zinc-900/40 border border-zinc-800/60">
-                  <h4 className="text-zinc-600 font-black text-[10px] uppercase tracking-widest mb-[16px]">
+                  <h4 className="text-zinc-600 font-black text-[10px] uppercase tracking-widest pb-[16px]">
                     What I Learned
                   </h4>
                   <p className="text-zinc-300 text-[15px] leading-relaxed break-keep whitespace-pre-wrap">
@@ -388,7 +372,7 @@ const ProjectDetailPage = () => {
                   </p>
                 </div>
                 <div className="p-[24px] lg:p-[32px] rounded-[24px] lg:rounded-[28px] bg-zinc-900/40 border border-zinc-800/60">
-                  <h4 className="text-zinc-600 font-black text-[10px] uppercase tracking-widest mb-[16px]">
+                  <h4 className="text-zinc-600 font-black text-[10px] uppercase tracking-widest pb-[16px]">
                     Achievements
                   </h4>
                   <p className="text-zinc-300 text-[15px] leading-relaxed break-keep whitespace-pre-wrap">
@@ -436,17 +420,19 @@ const ProjectDetailPage = () => {
 /* ── Sub-components ── */
 
 const SectionHeader = ({ num, title }: { num: string; title: string }) => (
-  <div className="flex items-center gap-[14px] mb-[32px]">
-    <span className="text-blue-500 text-[12px] font-black tracking-wider">
-      {num}
-    </span>
-    <h2 className="text-[22px] font-black text-white">{title}</h2>
+  <div className="flex flex-col gap-[32px]">
+    <div className="flex items-center gap-[14px]">
+      <span className="text-blue-500 text-[12px] font-black tracking-wider">
+        {num}
+      </span>
+      <h2 className="text-[22px] font-black text-white">{title}</h2>
+    </div>
   </div>
 );
 
 const MetaItem = ({ label, value }: { label: string; value: string }) => (
-  <div>
-    <p className="text-[10px] font-black text-zinc-600 uppercase tracking-widest mb-[4px]">
+  <div className="flex flex-col gap-[4px]">
+    <p className="text-[10px] font-black text-zinc-600 uppercase tracking-widest">
       {label}
     </p>
     <p className="text-white font-bold text-[14px]">{value}</p>

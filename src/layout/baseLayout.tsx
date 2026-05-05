@@ -18,7 +18,7 @@ export default function BaseLayout({ children }: Props) {
     <>
       {!isProjectPage && <Header />}
 
-      <div className="main">{children}</div>
+      <main className="pb-[128px]">{children}</main>
 
       <Footer />
     </>

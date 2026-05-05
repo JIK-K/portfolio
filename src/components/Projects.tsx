@@ -3,14 +3,8 @@
 import { ProjectData } from "../types/project";
 import { projectsData } from "../data/projects/index";
 import Image from "next/image";
-import localFont from "next/font/local";
+import { rixi } from "../lib/fonts";
 import { useRouter } from "next/navigation";
-
-const rixi = localFont({
-  src: "../assets/fonts/RixInooAriDuriRegular.ttf",
-  display: "swap",
-  variable: "--font-rixi",
-});
 
 const ProjectCard = ({
   title,
@@ -26,7 +20,7 @@ const ProjectCard = ({
   const router = useRouter();
 
   return (
-    <section className="flex flex-col lg:flex-row gap-[48px] items-stretch bg-[#1E1E1E] rounded-[32px] overflow-hidden border border-white/[0.08] p-[40px] lg:h-[640px] relative">
+    <article className="flex flex-col lg:flex-row gap-[48px] items-stretch bg-[#1E1E1E] rounded-[32px] overflow-hidden border border-white/[0.08] p-[40px] lg:h-[640px] relative">
       <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
 
       {/* Image Section */}
@@ -135,7 +129,7 @@ const ProjectCard = ({
           </span>
         </button>
       </div>
-    </section>
+    </article>
   );
 };
 
