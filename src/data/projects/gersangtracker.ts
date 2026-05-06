@@ -87,21 +87,22 @@ export const gersangtracker: ProjectData = {
       description:
         "MVVM 패턴을 기반으로 View(XAML)·ViewModel·Service·Model의 4계층을 명확히 분리했습니다. \nOcrService가 캡처→전처리→OCR→정규화 파이프라인을 담당하고, DatabaseService가 EF Core를 통해 SQLite 읽기/쓰기를 처리합니다. \nViewModel은 두 서비스를 조율하며 ObservableCollection을 통해 View에 실시간 바인딩을 제공합니다.",
       tree: `GersangTracker/
-├── Models/
-│   ├── DropLog.cs          # 드랍 이벤트 엔티티
-│   ├── Item.cs             # 아이템 가격 정보
-│   └── Session.cs          # 사냥 세션 집계
-├── ViewModels/
-│   ├── MainViewModel.cs    # 메인 화면 상태·커맨드
-│   └── SessionViewModel.cs # 세션 통계 계산
-├── Views/
-│   ├── MainWindow.xaml     # 실시간 드랍 목록
-│   └── SessionView.xaml    # 수익 통계 대시보드
-├── Services/
-│   ├── OcrService.cs       # 캡처→전처리→OCR 파이프라인
-│   ├── DatabaseService.cs  # EF Core CRUD
-│   └── ExcelService.cs     # EPPlus 내보내기
-└── Converters/             # XAML 바인딩 변환기`,
+              ├── Models/
+              │   ├── DropLog.cs          # 드랍 이벤트 엔티티
+              │   ├── Item.cs             # 아이템 가격 정보
+              │   └── Session.cs          # 사냥 세션 집계
+              ├── ViewModels/
+              │   ├── MainViewModel.cs    # 메인 화면 상태·커맨드
+              │   └── SessionViewModel.cs # 세션 통계 계산
+              ├── Views/
+              │   ├── MainWindow.xaml     # 실시간 드랍 목록
+              │   └── SessionView.xaml    # 수익 통계 대시보드
+              ├── Services/
+              │   ├── OcrService.cs       # 캡처→전처리→OCR 파이프라인
+              │   ├── DatabaseService.cs  # EF Core CRUD
+              │   └── ExcelService.cs     # EPPlus 내보내기
+              └── Converters/             # XAML 바인딩 변환기`,
+      diagram: "/projects/GersangTracker_diagram.png",
     },
     features: [
       {

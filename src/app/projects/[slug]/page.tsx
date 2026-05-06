@@ -248,7 +248,7 @@ const ProjectDetailPage = () => {
                         alt={project.title}
                         width={600}
                         height={600}
-                        className="object-contain w-[600px]"
+                        className="object-contain w-[800px]"
                       />
                     </div>
                   )}

@@ -74,21 +74,22 @@ export const rastreador: ProjectData = {
       description:
         "Monitor(Core)가 중앙 컨트롤러로 수집 스레드(collectLoop)와 렌더링 스레드(displayLoop)의 라이프사이클을 관리합니다. Collector 계층은 SystemMonitor·ProcessMonitor·ETWMonitor로 분리되어 각자의 데이터 소스를 담당하고, BottleneckAnalyzer가 임계치를 검사하여 병목 여부를 판별합니다. OverlayDisplay는 분석 결과를 GDI+로 렌더링하며, TrayIcon이 백그라운드 동작을 제어합니다.",
       tree: `Rastreador/
-├── include/
-│   ├── core/
-│   │   └── Monitor.h          # 중앙 컨트롤러, 스레드 관리
-│   ├── collector/
-│   │   ├── SystemMonitor.h    # 전체 CPU·Memory·Network 수집 (PDH)
-│   │   ├── ProcessMonitor.h   # 프로세스별 리소스 수집 (PSAPI)
-│   │   └── ETWMonitor.h       # 커널 네트워크 이벤트 캡처 (ETW)
-│   ├── analyzer/
-│   │   └── BottleneckAnalyzer.h  # 임계치 기반 병목 판별
-│   ├── display/
-│   │   └── OverlayDisplay.h   # GDI+ 투명 오버레이 렌더링
-│   └── tray/
-│       └── TrayIcon.h         # 시스템 트레이 아이콘 제어
-├── src/                       # 각 헤더 대응 구현 파일
-└── CMakeLists.txt             # /MANIFESTUAC 관리자 권한 설정`,
+              ├── include/
+              │   ├── core/
+              │   │   └── Monitor.h          # 중앙 컨트롤러, 스레드 관리
+              │   ├── collector/
+              │   │   ├── SystemMonitor.h    # 전체 CPU·Memory·Network 수집 (PDH)
+              │   │   ├── ProcessMonitor.h   # 프로세스별 리소스 수집 (PSAPI)
+              │   │   └── ETWMonitor.h       # 커널 네트워크 이벤트 캡처 (ETW)
+              │   ├── analyzer/
+              │   │   └── BottleneckAnalyzer.h  # 임계치 기반 병목 판별
+              │   ├── display/
+              │   │   └── OverlayDisplay.h   # GDI+ 투명 오버레이 렌더링
+              │   └── tray/
+              │       └── TrayIcon.h         # 시스템 트레이 아이콘 제어
+              ├── src/                       # 각 헤더 대응 구현 파일
+              └── CMakeLists.txt             # /MANIFESTUAC 관리자 권한 설정`,
+      diagram: "/projects/Rastreador_diagram.png",
     },
     features: [
       {
