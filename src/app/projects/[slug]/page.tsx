@@ -93,7 +93,7 @@ const ProjectDetailPage = () => {
                   className={`text-[10px] font-black transition-colors ${
                     activeId === id
                       ? "text-blue-500"
-                      : "text-zinc-600 group-hover:text-zinc-500"
+                      : "text-zinc-600 group-hover:text-zinc-400"
                   }`}
                 >
                   {num}
@@ -119,7 +119,7 @@ const ProjectDetailPage = () => {
             {/* Mobile back button */}
             <button
               onClick={() => router.push("/")}
-              className="lg:hidden pb-[36px] flex items-center gap-[8px] text-zinc-500 hover:text-white transition-colors group text-[12px] font-bold uppercase tracking-widest"
+              className="lg:hidden pb-[36px] flex items-center gap-[8px] text-zinc-400 hover:text-white transition-colors group text-[12px] font-bold uppercase tracking-widest"
             >
               <span className="group-hover:-translate-x-0.5 transition-transform inline-block">
                 ←
@@ -153,7 +153,7 @@ const ProjectDetailPage = () => {
                 >
                   {project.title}
                 </h1>
-                <p className="text-[15px] md:text-[16px] text-zinc-500 font-medium leading-relaxed max-w-[680px] break-keep">
+                <p className="text-[15px] md:text-[16px] text-zinc-400 font-medium leading-relaxed max-w-[680px] break-keep">
                   {project.description}
                 </p>
               </div>
@@ -166,7 +166,7 @@ const ProjectDetailPage = () => {
             <section id="overview" className="scroll-mt-[32px]">
               <SectionHeader num="01" title="Project Overview" />
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-[20px]">
-                <div className="lg:col-span-2 bg-zinc-900/40 rounded-[24px] p-[24px] lg:p-[32px] border border-zinc-800/60 text-[14px] lg:text-[15px] leading-[1.8] text-zinc-400 whitespace-pre-wrap">
+                <div className="lg:col-span-2 bg-zinc-900/40 rounded-[24px] p-[24px] lg:p-[32px] border border-zinc-800/60 text-[14px] lg:text-[15px] leading-[1.8] text-zinc-400 font-bold whitespace-pre-wrap">
                   {details.overview.description}
                 </div>
                 <div className="flex flex-col gap-[24px] bg-zinc-900/20 p-[24px] lg:p-[28px] rounded-[24px] border border-zinc-800/40">
@@ -223,7 +223,7 @@ const ProjectDetailPage = () => {
                         <h4 className="text-blue-400 font-bold text-[14px] pb-[6px]">
                           {lib.name}
                         </h4>
-                        <p className="text-zinc-500 text-[13px] leading-relaxed break-keep">
+                        <p className="text-zinc-400 text-[13px] leading-relaxed break-keep">
                           {lib.reason}
                         </p>
                       </div>
@@ -238,7 +238,7 @@ const ProjectDetailPage = () => {
               <section id="architecture" className="scroll-mt-[32px]">
                 <SectionHeader num="03" title="System Architecture" />
                 <div className="flex flex-col gap-[24px]">
-                  <p className="text-[14px] lg:text-[15px] leading-relaxed text-zinc-500 whitespace-pre-wrap">
+                  <p className="text-[14px] lg:text-[15px] leading-relaxed text-zinc-400 whitespace-pre-wrap">
                     {details.architecture.description}
                   </p>
                   {details.architecture.diagram && (
@@ -246,8 +246,8 @@ const ProjectDetailPage = () => {
                       <Image
                         src={details.architecture.diagram}
                         alt={project.title}
-                        width={600}
-                        height={600}
+                        width={1200}
+                        height={1200}
                         className="object-contain w-[800px]"
                       />
                     </div>
@@ -275,7 +275,7 @@ const ProjectDetailPage = () => {
                         <p className="text-blue-500"> 0{idx + 1}</p>
                         {feature.title}
                       </h3>
-                      <p className="text-zinc-500 leading-relaxed text-[14px] break-keep">
+                      <p className="text-zinc-400 leading-relaxed text-[14px] break-keep">
                         {feature.description}
                       </p>
                     </div>
@@ -302,7 +302,7 @@ const ProjectDetailPage = () => {
                           <span className="text-[10px] font-black text-red-500/80 uppercase tracking-widest">
                             Problem
                           </span>
-                          <p className="text-zinc-500 text-[14px] leading-relaxed break-keep">
+                          <p className="text-zinc-400 text-[14px] leading-relaxed break-keep">
                             {item.problem}
                           </p>
                         </div>
@@ -310,7 +310,7 @@ const ProjectDetailPage = () => {
                           <span className="text-[10px] font-black text-emerald-500/80 uppercase tracking-widest">
                             Solution
                           </span>
-                          <p className="text-zinc-500 text-[14px] leading-relaxed break-keep">
+                          <p className="text-zinc-400 text-[14px] leading-relaxed break-keep">
                             {item.solution}
                           </p>
                         </div>
@@ -383,7 +383,6 @@ const ProjectDetailPage = () => {
             </section>
 
             {/* 08. Links */}
-            {/* 08. Links */}
             <section id="links" className="scroll-mt-[32px]">
               <SectionHeader num="08" title="Links" />
               <div className="flex flex-col gap-[8px]">
@@ -399,7 +398,7 @@ const ProjectDetailPage = () => {
                       <span className="text-[11px] font-black text-zinc-700 min-w-[20px]">
                         {String(idx + 1).padStart(2, "0")}
                       </span>
-                      <span className="text-[13px] font-bold text-zinc-500 tracking-[0.08em] uppercase group-hover:text-white transition-colors">
+                      <span className="text-[13px] font-bold text-zinc-400 tracking-[0.08em] uppercase group-hover:text-white transition-colors">
                         {link.label}
                       </span>
                     </div>
@@ -420,7 +419,7 @@ const ProjectDetailPage = () => {
 /* ── Sub-components ── */
 
 const SectionHeader = ({ num, title }: { num: string; title: string }) => (
-  <div className="flex flex-col gap-[32px]">
+  <div className="flex flex-col gap-[32px] pb-[12px]">
     <div className="flex items-center gap-[14px]">
       <span className="text-blue-500 text-[12px] font-black tracking-wider">
         {num}
