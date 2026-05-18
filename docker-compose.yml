@@ -2,20 +2,18 @@ version: "3.8"
 
 services:
   portfolio-app:
-    container_name: portfolio-nextjs
+    container_name: portfolio-app
     build:
       context: .
       dockerfile: Dockerfile
-    # Nginx를 통하므로 외부 포트 9912는 닫아도 무방(보안상 유리)
     expose:
       - "3000"
     restart: always
     environment:
       - NODE_ENV=production
     networks:
-      - portfolio-network
+      - tcs_proxy_network
 
 networks:
-  portfolio-network:
+  tcs_proxy_network:
     external: true
-    name: lolfight_network # 실제 존재하는 네트워크 이름을 여기 적습니다.
