@@ -18,12 +18,12 @@ export const rastreador: ProjectData = {
     {
       title: "멀티스레드 환경에서의 데이터 경합 및 UI 지연",
       description:
-        "1초 주기의 수집 루프와 렌더링 루프가 동일한 메모리에 동시에 접근하면 데이터 경합이 발생합니다. ETW 콜백 데이터에 더블 버퍼링(s_pidBytes[2]) 구조를 적용하고 스왑 방식으로 Lock 구간을 최소화했으며, 수집·렌더링 스레드를 완전히 분리하여 UI 프리징 없는 오버레이를 구현했습니다.",
+        "데이터 수집 루프와 렌더링 루프가 동일한 메모리에 동시에 접근하면 데이터 경합이 발생합니다. ETW 콜백 데이터에 더블 버퍼링(s_pidBytes[2]) 구조를 적용하고 스왑 방식으로 Lock 구간을 최소화했으며, 수집·렌더링 스레드를 분리하고 비동기 메시지 통신을 적용하여 UI 프리징 없는 오버레이를 구현했습니다.",
     },
     {
       title: "누적 CPU 시간 기반 실시간 점유율 산출",
       description:
-        "Windows는 프로세스 CPU 사용률을 직접 제공하지 않고 누적 커널·유저 시간만 반환합니다. 이전 주기의 CPU 틱을 캐싱하고 현재 값과의 차분(Delta)을 경과 실시간으로 나누는 수식을 직접 구현하여 작업 관리자 수준의 신뢰도를 달성했습니다.",
+        "Windows는 프로세스 CPU 사용률을 직접 제공하지 않고 누적 커널·유저 시간만 반환합니다. 이전 주기의 전체 시스템 누적 시간과 해당 프로세스의 누적 시간의 차분(Delta) 비율을 산출하는 수식을 직접 구현하여 작업 관리자 수준의 신뢰도를 달성했습니다.",
     },
   ],
   details: {
@@ -72,11 +72,11 @@ export const rastreador: ProjectData = {
     },
     architecture: {
       description:
-        "Monitor(Core)가 중앙 컨트롤러로 수집 스레드(collectLoop)와 렌더링 스레드(displayLoop)의 라이프사이클을 관리합니다. Collector 계층은 SystemMonitor·ProcessMonitor·ETWMonitor로 분리되어 각자의 데이터 소스를 담당하고, BottleneckAnalyzer가 임계치를 검사하여 병목 여부를 판별합니다. OverlayDisplay는 분석 결과를 GDI+로 렌더링하며, TrayIcon이 백그라운드 동작을 제어합니다.",
+        "Monitor(Core)가 중앙 컨트롤러로 데이터를 수집하며, 비동기 메시지(PostMessage)를 통해 OverlayDisplay의 전용 UI 스레드에 렌더링을 지시합니다. Collector 계층은 SystemMonitor·ProcessMonitor·ETWMonitor로 분리되어 각자의 데이터 소스를 담당하고, BottleneckAnalyzer가 임계치를 검사하여 병목 여부를 판별합니다. TrayIcon은 시스템 트레이에서의 동작을 제어합니다.",
       tree: `Rastreador/
               ├── include/
               │   ├── core/
-              │   │   └── Monitor.h          # 중앙 컨트롤러, 스레드 관리
+              │   │   └── Monitor.h          # 중앙 컨트롤러, 수집 루프 관리
               │   ├── collector/
               │   │   ├── SystemMonitor.h    # 전체 CPU·Memory·Network 수집 (PDH)
               │   │   ├── ProcessMonitor.h   # 프로세스별 리소스 수집 (PSAPI)
@@ -84,7 +84,7 @@ export const rastreador: ProjectData = {
               │   ├── analyzer/
               │   │   └── BottleneckAnalyzer.h  # 임계치 기반 병목 판별
               │   ├── display/
-              │   │   └── OverlayDisplay.h   # GDI+ 투명 오버레이 렌더링
+              │   │   └── OverlayDisplay.h   # GDI+ UI 메시지 루프 및 렌더링
               │   └── tray/
               │       └── TrayIcon.h         # 시스템 트레이 아이콘 제어
               ├── src/                       # 각 헤더 대응 구현 파일
@@ -100,7 +100,7 @@ export const rastreador: ProjectData = {
       {
         title: "실시간 시스템·프로세스 리소스 모니터링",
         description:
-          "PDH로 시스템 전체 CPU·메모리·네트워크 사용률을 수집하고, PSAPI의 GetProcessTimes Delta 계산으로 개별 프로세스의 CPU 점유율을 산출합니다. 리소스 상위 프로세스를 자동으로 정렬하여 오버레이에 표시합니다.",
+          "PDH로 시스템 전체 CPU·메모리·네트워크 사용률을 수집하고, PSAPI를 활용한 Delta 계산으로 개별 프로세스의 CPU 점유율을 산출합니다. 리소스 상위 프로세스를 자동으로 정렬하여 오버레이에 표시합니다.",
       },
       {
         title: "클릭 통과 투명 오버레이",
@@ -135,14 +135,14 @@ export const rastreador: ProjectData = {
         solution:
           "s_pidBytes[2] 배열 기반 더블 버퍼링 구조를 도입했습니다. 콜백은 현재 활성 버퍼에만 쓰고, 데이터 읽기 시점에 버퍼 인덱스를 스왑하는 방식으로 Lock 구간을 스왑 순간으로 한정했습니다.",
         result:
-          "ETW 콜백 스레드와 데이터 읽기 스레드 간의 Lock 경합을 최소화하여 수집 부하가 렌더링 주사율에 영향을 주지 않습니다.",
+          "ETW 콜백 스레드와 데이터 읽기 스레드 간의 Lock 경합을 O(1) 수준으로 최소화하여 수집 부하가 UI에 영향을 주지 않도록 개선했습니다.",
       },
       {
         title: "오버레이 깜빡임 제거",
         problem:
           "GDI+로 투명 오버레이를 매 프레임 갱신할 때 이전 프레임과 새 프레임 사이에 빈 화면이 노출되어 심각한 깜빡임이 발생했습니다.",
         solution:
-          "메모리 DC(Device Context)에 먼저 전체 프레임을 렌더링한 뒤 화면 DC로 일괄 복사(BitBlt)하는 더블 버퍼링 기법을 적용했습니다. WS_EX_LAYERED 속성과 UpdateLayeredWindow API를 조합하여 투명도 합성을 OS 레벨에서 처리했습니다.",
+          "메모리 DC(Device Context)에 전체 프레임을 렌더링한 뒤 화면 DC로 일괄 복사(BitBlt)하는 더블 버퍼링 기법을 적용했습니다. 또한 WS_EX_LAYERED 속성과 SetLayeredWindowAttributes(LWA_COLORKEY) API를 활용해 검정색 배경을 투명하게 빼내는 Color-keying 방식으로 투명도 합성을 구현했습니다.",
         result:
           "렌더링 갱신 중 깜빡임 완전 제거. 60FPS 수준의 부드러운 오버레이 업데이트를 달성했습니다.",
       },
@@ -151,23 +151,23 @@ export const rastreador: ProjectData = {
         problem:
           "Windows는 GetProcessTimes로 커널·유저 시간의 누적값만 반환하며 현재 CPU 사용률을 직접 제공하지 않습니다. 단순 값 비교로는 순간 점유율 계산이 불가능했습니다.",
         solution:
-          "이전 주기의 커널·유저 시간 합계를 캐싱하고, 현재 값과의 차분(Delta)을 경과 실제 시간(QueryPerformanceCounter 기반)으로 나누는 수식을 직접 구현했습니다. 논리 코어 수로 나누어 코어당 점유율로 정규화했습니다.",
+          "이전 주기의 전체 시스템 누적 시간(GetSystemTimes)과 해당 프로세스의 누적 시간(GetProcessTimes)의 차분(Delta) 비율을 구하는 수식을 직접 구현했습니다. 논리 코어 수로 나누어 코어당 점유율로 정규화했습니다.",
         result:
           "CPU 사용률 오차 5% 이상에서 1% 미만으로 개선. 작업 관리자와 동등한 신뢰도의 수치를 도출합니다.",
       },
     ],
     optimizations: [
       {
-        title: "수집·렌더링 스레드 완전 분리",
+        title: "비동기 메시지 큐 기반의 UI 스레드 분리",
         description:
-          "collectLoop(데이터 수집)와 displayLoop(GDI+ 렌더링)를 독립 std::thread로 분리했습니다. 수집 로직의 처리 지연이 오버레이 갱신 주사율에 영향을 미치지 않도록 std::mutex 기반으로 공유 데이터 접근을 동기화했습니다.",
-        metric: "수집 부하와 무관하게 렌더링 60FPS 유지",
+          "수집 스레드(Monitor)와 화면을 그리는 UI 스레드(OverlayDisplay)를 완전히 분리하고, 윈도우 비동기 메시지(PostMessage)를 통해 렌더링 신호만 전달하는 파이프라인을 구축했습니다. 수집 로직의 지연이 화면 주사율에 영향을 미치지 않으며, 동기화 병목을 차단했습니다.",
+        metric: "수집 부하와 무관하게 렌더링 응답성 완벽 보장",
       },
       {
         title: "ETW 더블 버퍼링으로 Lock 구간 최소화",
         description:
           "s_pidBytes[2] 배열로 콜백 쓰기 버퍼와 읽기 버퍼를 분리하고 스왑 방식으로 전환합니다. 콜백이 Lock을 보유하는 시간이 스왑 순간으로 한정되어 초당 수천 번 발생하는 ETW 이벤트에서도 Lock 경합이 발생하지 않습니다.",
-        metric: "ETW 콜백 Lock 보유 시간 대폭 단축",
+        metric: "ETW 콜백 Lock 보유 시간 O(1) 단위로 대폭 단축",
       },
       {
         title: "UAC 권한 빌드 레벨 강제",
@@ -176,17 +176,17 @@ export const rastreador: ProjectData = {
         metric: "권한 오류로 인한 런타임 크래시 0건",
       },
       {
-        title: "GDI+ 더블 버퍼링 렌더링",
+        title: "Color-keying 및 GDI+ 더블 버퍼링 렌더링",
         description:
-          "메모리 DC에 전체 프레임을 완성한 뒤 화면 DC로 일괄 BitBlt하여 중간 상태가 화면에 노출되지 않도록 합니다. UpdateLayeredWindow로 투명도 합성을 OS에 위임하여 CPU 렌더링 부하를 최소화했습니다.",
+          "메모리 DC에 전체 프레임을 완성한 뒤 화면 DC로 일괄 BitBlt하여 렌더링 중간 상태가 노출되지 않게 방지합니다. SetLayeredWindowAttributes를 활용한 Color-keying 기법으로 투명도 합성을 OS에 위임하여 CPU 렌더링 부하를 최소화했습니다.",
         metric: "렌더링 깜빡임 제거 / 오버레이 CPU 점유 최소화",
       },
     ],
     retrospective: {
       learned:
-        "상위 레벨 API 호출에 머물지 않고 Windows 커널의 ETW 이벤트 추적 원리를 직접 다루면서 운영체제가 네트워크 패킷을 처리하고 이벤트를 전달하는 내부 구조를 깊이 이해하게 되었습니다. 멀티스레드 환경에서 더블 버퍼링과 Lock 최소화 전략이 실제 성능에 미치는 영향을 수치로 확인하면서 동시성 설계의 중요성을 체감했습니다.",
+        "상위 레벨 API 호출에 머물지 않고 Windows 커널의 ETW 이벤트 추적 원리를 직접 다루면서 운영체제가 네트워크 패킷을 처리하고 이벤트를 전달하는 내부 구조를 깊이 이해하게 되었습니다. 멀티스레드 환경에서 더블 버퍼링과 Lock 최소화, 그리고 비동기 렌더링 파이프라인 구축이 실제 성능에 미치는 영향을 확인하며 동시성 설계의 중요성을 체감했습니다.",
       achievement:
-        "Qt·CEF 등 무거운 서드파티 라이브러리 없이 순수 C++20과 네이티브 Windows API만으로 작업 관리자 수준의 측정 정확도(CPU 오차 1% 미만, 프로세스별 네트워크 대역폭)와 60FPS 오버레이를 동시에 달성했습니다. 커널 수준 프로그래밍부터 GDI+ 렌더링, 멀티스레드 동기화까지 시스템 프로그래밍 전 계층을 단독으로 구현하며 시스템 소프트웨어 개발 역량을 입증했습니다.",
+        "Qt·CEF 등 무거운 서드파티 라이브러리 없이 순수 C++20과 네이티브 Windows API만으로 작업 관리자 수준의 측정 정확도(CPU 오차 1% 미만, 프로세스별 네트워크 대역폭)와 부드러운 오버레이를 동시에 달성했습니다. 커널 수준 프로그래밍부터 GDI+ 렌더링, 멀티스레드 동기화까지 시스템 프로그래밍 전 계층을 단독으로 구현하며 시스템 소프트웨어 개발 역량을 입증했습니다.",
     },
     links: [
       {
