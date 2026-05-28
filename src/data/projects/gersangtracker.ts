@@ -10,8 +10,9 @@ export const gersangtracker: ProjectData = {
     "C#",
     "WPF",
     "MVVM",
-    "OpenCV",
-    "Tesseract OCR",
+    "SharpPcap",
+    "Packet Sniffing",
+    "Npcap",
     "SQLite",
     "EF Core",
   ],
@@ -21,26 +22,26 @@ export const gersangtracker: ProjectData = {
   imagePosition: "right",
   problems: [
     {
-      title: "Tesseract OCR 인식률 저하 및 오인식",
+      title: "Tesseract OCR 인식률 극복",
       description:
-        "게임 특유의 폰트와 배경색으로 인해 기본 OCR 인식률이 실사용 불가 수준으로 낮았습니다. OpenCV 기반 전처리 파이프라인(3배 확대, HighQualityBicubic 보간, 이진화)을 구축하고 Levenshtein 알고리즘을 도입해 유사도 매칭으로 오타를 자동 보정하여 인식 성공률을 95% 이상으로 끌어올렸습니다.",
+        "기존 컴퓨터 비전(OCR) 방식은 인게임 폰트와 투명한 배경으로 인해 오인식을 완벽하게 잡을 수 없었습니다. 이를 극복하기 위해 게임 클라이언트-서버 간의 패킷을 Npcap과 SharpPcap을 이용해 직접 가로채어 분석하는 네트워크 패킷 스니핑 방식으로 오인식률 0%를 달성했습니다.",
     },
     {
       title: "UI와 비즈니스 로직의 강한 결합",
       description:
-        "초기 구조에서 OCR 처리·DB 접근 로직이 코드비하인드에 혼재되어 유지보수와 테스트가 불가능했습니다. CommunityToolkit.Mvvm 기반 MVVM 패턴을 전면 도입하여 OcrService·DatabaseService를 ViewModel에서 분리하고 단위 테스트 가능한 구조로 개선했습니다.",
+        "초기 구조에서 네트워크 패킷, DB 접근 로직이 코드비하인드에 혼재되어 유지보수와 테스트가 불가능했습니다. CommunityToolkit.Mvvm 기반 MVVM 패턴을 전면 도입하여 PacketSnifferService·DatabaseService를 ViewModel에서 분리하고 단위 테스트 가능한 구조로 개선했습니다.",
     },
     {
-      title: "1초 주기 캡처 루프의 UI 쓰레드 차단",
+      title: "가변 통신 포트 및 TCP 단편화(Fragmentation) 대응",
       description:
-        "이미지 처리 작업이 메인 UI 스레드에서 동기 실행되어 화면 버벅임이 발생했습니다. Task 기반 비동기 루프로 전환하고 관심 영역(Crop)만 처리하도록 최적화하여 CPU 점유율을 낮추고 매끄러운 UI 응답성을 확보했습니다.",
+        "게임 실행 시마다 통신 포트가 동적으로 변하고, 네트워크 패킷이 쪼개져서(단편화) 수신되는 문제가 있었습니다. 백그라운드에서 실시간 PID 기반으로 가변 포트를 자동 추적하고, 커넥션별 패킷 버퍼링 및 스트림 재조립(Reassembly) 로직을 구현하여 데이터 유실 없이 안정적으로 패킷을 처리했습니다.",
     },
   ],
   details: {
     overview: {
       description:
-        "GersangTracker는 온라인 게임 '거상'의 사냥 세션 중 발생하는 아이템 드랍 메시지를 OCR로 자동 파싱하고, 획득 아이템의 가치를 합산하여 시간당 수익·효율 통계를 실시간으로 제공하는 WPF 데스크톱 도구입니다.\n\n기존에는 플레이어가 사냥 후 수동으로 드랍 목록을 기록하고 계산해야 했습니다. GersangTracker는 게임 화면의 특정 영역을 1초 주기로 캡처하고, OpenCV 전처리와 Tesseract OCR을 결합한 파이프라인으로 드랍 텍스트를 추출·정규화하여 SQLite에 저장합니다. 세션 종료 후 Excel 내보내기 기능을 통해 데이터를 외부로 활용할 수 있습니다.",
-      period: "2026.04 — 2026.05",
+        "GersangTracker는 온라인 게임 '거상'의 사냥 세션 중 발생하는 패킷을 자동 파싱하여, 획득 아이템의 가치를 합산하여 시간당 수익·효율 통계를 실시간으로 제공하는 WPF 데스크톱 도구입니다.\n\n기존에는 플레이어가 사냥 후 수동으로 드랍 목록을 기록하고 계산해야 했습니다. GersangTracker는 거상 프로세스의 통신 포트를 실시간으로 추적하여, 전투 종료 시 발생하는 패킷을 가로채 바이너리 수준에서 파싱합니다. 추출된 고유 아이템 ID를 실제 인게임 아이템명으로 1:1 변환하여 SQLite에 저장합니다.",
+      period: "2026.04 — 2026.06",
       role: "Single Developer",
       goal: "게임 화면 자동 분석을 통한 드랍 데이터 수집 및 시간당 수익 통계 자동화",
     },
@@ -52,20 +53,10 @@ export const gersangtracker: ProjectData = {
           items: ["WPF (Windows Presentation Foundation)"],
         },
         { label: "Pattern", items: ["MVVM", "CommunityToolkit.Mvvm"] },
-        { label: "Vision", items: ["OpenCvSharp4", "Tesseract OCR"] },
+        { label: "Vision", items: ["SharpPcap", "PacketDotNet"] },
         { label: "Data", items: ["SQLite", "EF Core", "EPPlus"] },
       ],
       mainLibraries: [
-        {
-          name: "Tesseract OCR",
-          reason:
-            "게임 화면 내 한글 드랍 메시지를 텍스트로 추출하는 핵심 엔진. 한국어 학습 데이터(kor.traineddata)를 적용하여 게임 폰트에 특화된 인식률을 확보했습니다.",
-        },
-        {
-          name: "OpenCvSharp4",
-          reason:
-            "Tesseract 입력 전 이미지 전처리(3배 확대, Otsu 이진화, 노이즈 제거)를 담당합니다. 전처리 유무에 따라 인식률이 60%대에서 95% 이상으로 개선되었습니다.",
-        },
         {
           name: "CommunityToolkit.Mvvm",
           reason:
@@ -81,11 +72,15 @@ export const gersangtracker: ProjectData = {
           reason:
             "세션 종료 후 드랍 기록을 Excel 파일로 내보내는 기능을 구현합니다. 외부 Excel 설치 없이 .xlsx 파일을 직접 생성합니다.",
         },
+        {
+          name: "SharpPcap + PacketDotNet",
+          reason: "거상 클라이언트와 서버 간의 네트워크 패킷을 Npcap을 통해 캡처하고 분석하는 핵심 라이브러리. 이미지 처리 방식 대비 오인식 없는 완벽한 아이템 감지를 구현했습니다."
+        }
       ],
     },
     architecture: {
       description:
-        "MVVM 패턴을 기반으로 View(XAML)·ViewModel·Service·Model의 4계층을 명확히 분리했습니다. \nOcrService가 캡처→전처리→OCR→정규화 파이프라인을 담당하고, DatabaseService가 EF Core를 통해 SQLite 읽기/쓰기를 처리합니다. \nViewModel은 두 서비스를 조율하며 ObservableCollection을 통해 View에 실시간 바인딩을 제공합니다.",
+        "MVVM 패턴을 기반으로 View(XAML)·ViewModel·Service·Model의 4계층을 명확히 분리했습니다. \nPacketSnifferService가 가변 포트 추적-패킷 캡처-스트림 재조립-바이너리 파싱 파이프라인을 담당하고, DatabaseService가 EF Core를 통해 SQLite 읽기/쓰기를 처리합니다. \nViewModel은 두 서비스를 조율하며 ObservableCollection을 통해 View에 실시간 바인딩을 제공합니다.",
       tree: `GersangTracker/
               ├── Models/
               │   ├── DropLog.cs          # 드랍 이벤트 엔티티
@@ -98,9 +93,10 @@ export const gersangtracker: ProjectData = {
               │   ├── MainWindow.xaml     # 실시간 드랍 목록
               │   └── SessionView.xaml    # 수익 통계 대시보드
               ├── Services/
-              │   ├── OcrService.cs       # 캡처→전처리→OCR 파이프라인
-              │   ├── DatabaseService.cs  # EF Core CRUD
-              │   └── ExcelService.cs     # EPPlus 내보내기
+              │   ├── PacketSnifferService.cs  # 네트워크 패킷 캡처 및 바이너리 파싱
+              │   ├── ItemDatabaseService.cs   # 아이템 ID → 인게임 아이템명 1:1 매핑
+              │   ├── DatabaseService.cs       # EF Core CRUD
+              │   └── ExcelService.cs          # EPPlus 내보내기
               └── Converters/             # XAML 바인딩 변환기`,
       diagram: "/projects/GersangTracker_diagram.png",
     },
@@ -108,7 +104,7 @@ export const gersangtracker: ProjectData = {
       {
         title: "실시간 드랍 감지",
         description:
-          "1초 주기로 게임 화면의 드랍 메시지 영역을 캡처하고, OpenCV 전처리와 Tesseract OCR을 거쳐 아이템 이름을 자동 추출합니다. 추출된 텍스트는 Levenshtein 유사도 매칭으로 DB 아이템 목록과 비교하여 오인식을 보정합니다.",
+          "거상 프로세스의 통신 패킷을 백그라운드에서 캡처하여 전투 종료 시 발생하는 인벤토리 동기화 패킷을 분석합니다. 바이너리 데이터에서 고유 아이템 ID와 수량을 추출하여 100%의 정확도로 실시간 아이템 획득을 감지합니다.",
       },
       {
         title: "시간당 수익 통계",
@@ -128,45 +124,45 @@ export const gersangtracker: ProjectData = {
     ],
     challenges: [
       {
-        title: "게임 폰트 OCR 인식률 개선 (60% → 95%+)",
+        title: "완벽한 인식률 확보를 위한 아키텍처 대전환",
         problem:
-          "거상의 고유 비트맵 폰트와 반투명 메시지 배경이 Tesseract 기본 설정과 맞지 않아 인식 성공률이 60%대에 그쳤습니다. 특히 유사 자형('ㄹ'/'ㄴ', '0'/'O')의 혼동이 빈번했습니다.",
+          "기존 OCR 기반 구조는 게임의 배경 탓에 인식 성공률이 50%를 넘기 힘들었고, 알고리즘을 추가적으로 적용을 해도 오인식, 미인식 문제를 완전히 해결할 수 없었습니다.",
         solution:
-          "OpenCV로 관심 영역을 3배 확대(HighQualityBicubic 보간)한 뒤 Otsu 이진화를 적용해 배경 노이즈를 제거했습니다. Tesseract 출력값에 Levenshtein 거리 알고리즘을 적용하여 DB 아이템 목록과 유사도를 비교하고, 거리 임계값 이하의 후보를 자동으로 보정합니다.",
+          "네트워크 패킷 스니핑 방식으로 전면 교체 했습니다. Npcap기반의 SharpPcap을 사용하여 패킷을 직접 파싱하여 준비된 데이터셋과 비교하여 해결했습니다.",
         result:
-          "실사용 환경 기준 OCR 인식 성공률 95% 이상 달성. 오인식으로 인한 수동 수정 작업이 사실상 제거되었습니다.",
+          "화질 또는 배경에 구애받지 않고 아이템 오인식률 0%(등록되어 있는 아이템 한정). 아이템 사전 입력 작업 삭제되었습니다.",
       },
       {
-        title: "UI 스레드 차단 없는 1초 캡처 루프 구현",
+        title: "가변 통신 포트 및 TCP 스트림 단편화",
         problem:
-          "캡처→전처리→OCR 전 과정이 메인 UI 스레드에서 동기 실행되어, 처리 시간(약 300~500ms)만큼 화면이 버벅이고 버튼 입력이 지연되었습니다.",
+          "거상 클라이언트 실행시 포트 변경, TCP 특성상 패킷이 한번에 오지 않고 여러 개로 단편화되어 수신됨",
         solution:
-          "캡처 루프 전체를 Task.Run 기반 비동기 구조로 분리하고, UI 업데이트는 Dispatcher.InvokeAsync를 통해 메인 스레드로 마샬링했습니다. ObservableCollection의 변경 알림이 바인딩 엔진을 통해 View를 자동 갱신하도록 설계하여 스레드 간 동기화 코드를 최소화했습니다.",
+          "백그라운드에서 netstat을 호출해 프로세스(PID) 기반으로 포트를 가져옵니다. IP:Port로 버퍼에 데이터를 누적시키고 헤더의 길이를 읽어서 패킷이 완전히 도착했을때만 자르는 기법을 사용했습니다.",
         result:
-          "캡처 루프 실행 중에도 UI 응답 지연 0ms. 세션 중 버튼 조작 및 통계 화면 전환이 즉각적으로 반응합니다.",
+          "동적 포트 변경에도 대응되며, 패킷 유실 또는 구조적 깨짐에 대응가능합니다.",
       },
       {
         title: "MVVM 도입으로 코드비하인드 의존 제거",
         problem:
-          "초기 프로토타입에서 OCR 로직, DB 접근, UI 이벤트 핸들러가 MainWindow.xaml.cs에 혼재되어 기능 추가 시마다 부작용이 발생하고 단위 테스트가 불가능했습니다.",
+          "초기 프로토타입에서 스니핑 로직, DB 접근, UI 이벤트 핸들러가 MainWindow.xaml.cs에 혼재되어 기능 추가 시마다 부작용이 발생하고 단위 테스트가 불가능했습니다.",
         solution:
-          "CommunityToolkit.Mvvm의 소스 생성기([ObservableProperty], [RelayCommand])를 도입하여 보일러플레이트를 제거하고, OcrService·DatabaseService·ExcelService를 독립 클래스로 분리했습니다. ViewModel은 서비스 인터페이스만 의존하도록 설계하여 Mock 교체가 가능한 구조를 확보했습니다.",
+          "CommunityToolkit.Mvvm의 소스 생성기([ObservableProperty], [RelayCommand])를 도입하여 보일러플레이트를 제거하고, PacketSnifferService, DatabaseService, ExcelService를 독립 클래스로 분리했습니다. ViewModel은 서비스 인터페이스만 의존하도록 설계하여 Mock 교체가 가능한 구조를 확보했습니다.",
         result:
           "코드비하인드 로직 100% 제거. 서비스 단위 테스트 작성이 가능해졌고, 신규 기능(Excel 내보내기) 추가 시 기존 코드 수정 없이 서비스 클래스 추가만으로 구현 완료했습니다.",
       },
     ],
     optimizations: [
       {
-        title: "관심 영역(ROI) 기반 이미지 처리",
+        title: "비동기 논블로킹 네트워크 캡처",
         description:
-          "전체 화면(1920×1080) 대신 드랍 메시지가 표시되는 고정 영역(약 400×80px)만 캡처하고 전처리합니다. 처리 픽셀 수를 약 98% 절감하여 OCR 1회 수행 시간을 단축했습니다.",
-        metric: "처리 픽셀 수 약 98% 절감 / OCR 처리 시간 단축",
+          "UI Thread와 분리된 백그라운드 Task 기반 캡처 루프를 구성하여 부하를 최소화하고 캡처중에도 UI의 응답을 부드럽게 유지",
+        metric: "UI 스레드 차단 / 저지연 패킷 분석",
       },
       {
-        title: "Levenshtein 캐싱으로 반복 연산 제거",
+        title: "TCP Sequence Number 캐싱으로 중복 패킷 방어",
         description:
-          "드랍 목록은 세션 중 변경되지 않으므로, 앱 시작 시 DB 아이템 목록을 메모리에 로드하고 Levenshtein 비교 결과를 Dictionary로 캐싱합니다. 동일 아이템 재인식 시 연산 없이 즉시 반환합니다.",
-        metric: "반복 드랍 아이템 매칭 시간 O(n) → O(1)",
+          "TCP 재전송 또는 캡처 중복으로 동일 데이터가 여러번 처리되는 것을 막기 위해 시퀀스 번호를 HashSet에 캐싱하여 이미 처리된 패킷을 처리합니다. O(1)",
+        metric: "동일 패킷 중복 파싱 원천 차단",
       },
       {
         title: "EF Core 배치 삽입으로 DB I/O 최소화",
@@ -177,9 +173,9 @@ export const gersangtracker: ProjectData = {
     ],
     retrospective: {
       learned:
-        "단순한 기능 구현을 넘어 '왜 이 구조여야 하는가'를 고민하는 계기가 되었습니다. \nMVVM을 처음 도입하면서 관심사 분리의 이점을 체감했고, 비동기 처리을 실전에서 직접 다루며 WPF의 스레딩 모델을 깊이 이해하게 되었습니다. \nOCR 파이프라인 구축을 통해 알고리즘 선택(Levenshtein)이 사용자 경험에 직결된다는 점도 배웠습니다.",
+        "단순한 기능 구현을 넘어 '왜 이 구조여야 하는가'를 고민하는 계기가 되었습니다. \nMVVM을 처음 도입하면서 관심사 분리의 이점을 체감했고, 비동기 처리을 실전에서 직접 다루며 WPF의 스레딩 모델을 깊이 이해하게 되었습니다. \n초기 OCR 방식의 한계를 겪고 네트워크 패킷 분석으로 아키텍처를 과감히 전환해 보면서, 요구사항을 해결하기 위한 문제 접근 방식의 시야를 크게 넓혔습니다.",
       achievement:
-        "웹 개발 외의 영역인 데스크톱 애플리케이션에서 컴퓨터 비전(OpenCV)과 OCR(Tesseract)을 결합한 실용적인 도구를 처음부터 끝까지 혼자 완성했습니다. \n실제 게임 플레이에서 사용 가능한 수준(인식률 95%+, UI 무응답 0ms)의 품질을 달성했고, 코드 구조 개선(MVVM 전환)을 통해 유지보수성과 확장성을 동시에 확보한 점이 가장 큰 성취입니다.",
+        "웹 개발 외의 영역인 데스크톱 애플리케이션에서 로우레벨 네트워크 프로그래밍(SharpPcap)을 활용한 실용적인 패킷 분석 도구를 처음부터 끝까지 혼자 완성했습니다. \n실제 게임 플레이에서 사용 가능한 수준초기 비전(Vision) 방식의 한계를 인정하고 패킷 분석 구조로 리팩토링하여 오인식률 0%의 상용 앱 수준 품질을 달성한 점이 가장 큰 성취입니다.",
     },
     links: [
       {
