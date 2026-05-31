@@ -8,6 +8,7 @@ export interface ProjectDetail {
     description: string;
     period: string;
     role: string;
+    team?: string;
     goal?: string;
   };
   techStack: {

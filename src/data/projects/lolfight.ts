@@ -46,6 +46,7 @@ export const lolfight: ProjectData = {
         "롤파이트는 League of Legends의 사설 스크림 플랫폼 입니다. 수준 높은 스크림 게임을 즐길 수 있도록 하며, 실력 있는 유저의 스크림 서비스를 제공하고 PC방 대회와 사설 리그는 아우르는 통합 스크림 플랫폼 서비스를 목표로 개발했습니다.",
       period: "2024.05 — 2024.12",
       role: "Backend & Lead Developer",
+      team: "1인 개인 프로젝트",
       goal: "분산된 스크림 문화를 하나로 모으는 통합 플랫폼 구축 및 성능 최적화",
     },
     techStack: {

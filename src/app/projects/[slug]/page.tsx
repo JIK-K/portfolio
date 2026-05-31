@@ -172,6 +172,9 @@ const ProjectDetailPage = () => {
                 <div className="flex flex-col gap-[24px] bg-slate-50 p-[24px] lg:p-[28px] rounded-[24px] border border-slate-200">
                   <MetaItem label="Period" value={details.overview.period} />
                   <MetaItem label="Role" value={details.overview.role} />
+                  {details.overview.team && (
+                    <MetaItem label="Team" value={details.overview.team} />
+                  )}
                   {details.overview.goal && (
                     <div className="flex flex-col gap-[6px]">
                       <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
