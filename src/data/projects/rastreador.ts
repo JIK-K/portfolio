@@ -30,7 +30,7 @@ export const rastreador: ProjectData = {
     overview: {
       description:
         "Rastreador는 Windows 환경에서 시스템 자원(CPU, Memory, Network) 상태와 개별 프로세스의 리소스 점유를 실시간으로 추적하고, GDI+ 기반의 클릭 통과 투명 오버레이로 화면에 표시하는 경량 네이티브 모니터링 도구입니다.\n\n기존 작업 관리자는 프로세스별 네트워크 대역폭을 정확히 제공하지 않으며, 상시 전면에 띄워두기 어렵습니다. Rastreador는 Windows 커널 이벤트 추적 기술(ETW)을 직접 활용하여 어떤 프로세스가 얼마의 트래픽을 사용하는지 정밀하게 측정하고, WS_EX_LAYERED·WS_EX_TRANSPARENT 속성의 오버레이 창으로 게임이나 작업 중에도 방해 없이 정보를 제공합니다.\n\nQt, CEF 등 무거운 서드파티 라이브러리 없이 순수 C++20과 네이티브 Windows API만으로 구현되어, 백그라운드 실행 시 시스템 부하를 최소화합니다.",
-      period: "2023.10 — 2023.12",
+      period: "2026.04 — 2026.05",
       role: "Single Developer",
       team: "1인 개인 프로젝트",
       goal: "시스템 리소스 병목의 근본 원인을 프로세스 레벨에서 실시간 식별",
