@@ -4,7 +4,7 @@ export const lolfight: ProjectData = {
   slug: "LOLFIGHT",
   title: "LOLFIGHT",
   description:
-    "롤파이트는 League of Legends의 사설 스크림 플랫폼 입니다. 수준 높은 스크림 게임을 즐길 수 있도록 하며, 실력 있는 유저의 스크림 서비스를 제공하고 PC방 대회와 사설 리그는 아우르는 통합 스크림 플랫폼 서비스를 목표로 개발했습니다.",
+    "롤파이트는 League of Legends의 수준 높은 스크림 게임을 즐길 수 있도록 하며, 실력 있는 유저의 스크림 서비스를 제공하고 PC방 대회와 사설 리그는 아우르는 통합 스크림 플랫폼 입니다.",
   tags: [
     "Nest.js",
     "TypeScript",
@@ -43,7 +43,7 @@ export const lolfight: ProjectData = {
   details: {
     overview: {
       description:
-        "롤파이트는 League of Legends의 사설 스크림 플랫폼 입니다. 수준 높은 스크림 게임을 즐길 수 있도록 하며, 실력 있는 유저의 스크림 서비스를 제공하고 PC방 대회와 사설 리그는 아우르는 통합 스크림 플랫폼 서비스를 목표로 개발했습니다.",
+        "롤파이트는 League of Legends의 사설 스크림 플랫폼 입니다. 수준 높은 스크림 게임을 즐길 수 있도록 하며, 실력 있는 유저의 스크림 서비스를 제공하고 PC방 대회와 사설 리그는 아우르는 통합 스크림 플랫폼 서비스를 목표로 개발했습니다.\n\n기존에는 플레이어가 외부 메신저를 통해 수동으로 상대를 구하고 결과를 기록해야 했습니다. 롤파이트는 Riot API를 연동하여 게임 진행 상태부터 결과 처리까지 전 과정을 자동화합니다. NestJS와 Next.js 기반으로 구축되었으며, 외부 API 호출 지연과 다중 콜백 처리로 인한 DB 병목 문제를 Redis 캐싱 및 Promise.all 병렬 처리 구조로 개편하여 실시간 응답 성능을 최적화했습니다.",
       period: "2024.05 — 2024.12",
       role: "Backend & Lead Developer",
       team: "1인 개인 프로젝트",
