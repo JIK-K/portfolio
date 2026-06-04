@@ -72,7 +72,7 @@ export const lolfight: ProjectData = {
     architecture: {
       description:
         "Docker 컨테이너 환경에서 Next.js 프론트엔드와 NestJS 백엔드가 Nginx 리버스 프록시를 통해 연결되는 구조입니다. \nLet's Encrypt SSL 인증서를 Certbot으로 자동 갱신하며, TypeORM으로 MySQL에 접근합니다. Redis 캐시 레이어를 활용하고, Prometheus와 Grafana로 메트릭을 수집·시각화합니다. \nGitHub Actions 기반 CI/CD 파이프라인을 통해 자동 배포됩니다.",
-      diagram: "/projects/LOLFIGHT_diagram.svg",
+      diagram: "/projects/LOLFIGHT_diagram.png",
     },
     features: [
       {
